@@ -1,5 +1,6 @@
 import logging
-from aiogram import F
+
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.types import  CallbackQuery
 import random
 from aiogram import Bot, Dispatcher
@@ -12,12 +13,31 @@ from aiogram.filters import Command
 from datetime import datetime
 from aiogram.types import WebAppInfo
 from aiogram import Router, F, types
+import os
+from aiogram.client.session.aiohttp import AiohttpSession
+
+# Пути к файлам
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+IMAGES_DIR = os.path.join(BASE_DIR, 'Задания')
+
 
 router = Router()
 
+
 # Конфигурация
-BOT_TOKEN = "7378923438:AAE65rxUVcyFr30iV1nEpBhh7nHDy7gonUg"
+import logging
+from aiogram import Bot, Dispatcher
+
+# Конфигурация
+BOT_TOKEN = "..."
 ADMIN_IDS = [1824224788, 7066386368]
+session = AiohttpSession(proxy='http://proxy.server:3128')
+bot = Bot(token='...', session=session)
+
+# Инициализация бота без прокси
+
+dp = Dispatcher()
+
 
 # Клавиатуры
 kb_type1 = types.InlineKeyboardMarkup(inline_keyboard=[[
@@ -60,7 +80,7 @@ reference = {
 
 ✏️ Пример: Солнце светило ярко, и птицы пели в саду.""",
 
-    'spp': """📝 СПП - Сложноподчинённые предложения  
+    'spp': """📝 СПП - Сложноподчинённые предложения
 
 • Состоят из главной и придаточной части
 • Придаточная часть присоединяется подчинительными союзами: ЧТО, ЧТОБЫ, ПОТОМУ ЧТО, ЕСЛИ, КОГДА, КОТОРЫЙ, ГДЕ, КУДА
@@ -112,7 +132,6 @@ user_streaks = {}
 user_last_tasks = {}
 TESTER_IDS = set()
 
-bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 
@@ -425,7 +444,7 @@ async def show_profile(message: types.Message):
 • Текущий стрик: {streak} дней 🔥
 
 🏆 Достижения:
-• Уровень: {level} 
+• Уровень: {level}
 • До следующего уровня: {next_level - total_tasks} заданий
 
 🔔 Уведомления: {notifications_status}
@@ -521,7 +540,7 @@ async def back_to_profile(callback: types.CallbackQuery):
 • Текущий стрик: {streak} дней 🔥
 
 🏆 Достижения:
-• Уровень: {level} 
+• Уровень: {level}
 • До следующего уровня: {next_level - total_tasks} заданий
 
 🔔 Уведомления: {notifications_status}
@@ -729,7 +748,7 @@ BD = [
     # Задания типа 1 (A, B, C, D)
     {
         'id' : 1,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 1\1.1.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 1/1.1.png',
         'correct': 'A',
         'type': 'type1',
         'keyboard': kb_type1,
@@ -741,7 +760,7 @@ BD = [
     },
     {
         'id' : 2,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 1\1.2.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 1/1.2.png',
         'correct': 'B',
         'type': 'type1',
         'keyboard': kb_type1,
@@ -751,7 +770,7 @@ BD = [
     },
     {
         'id' : 3,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 1\1.3.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 1/1.3.png',
         'correct': 'D',
         'type': 'type1',
         'keyboard': kb_type1,
@@ -762,7 +781,7 @@ BD = [
     },
     {
         'id' : 4,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 1\1.4.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 1/1.4.png',
         'correct': 'A',
         'type': 'type1',
         'keyboard': kb_type1,
@@ -773,7 +792,7 @@ BD = [
     },
     {
         'id' : 5,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 1\1.5.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 1/1.5.png',
         'correct': 'B',
         'type': 'type1',
         'keyboard': kb_type1,
@@ -784,7 +803,7 @@ BD = [
     },
     {
         'id' : 6,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 1\1.6.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 1/1.6.png',
         'correct': 'D',
         'type': 'type1',
         'keyboard': kb_type1,
@@ -797,37 +816,37 @@ BD = [
     # Задания типа 2 (А, Б, В)
     {
         'id' : 7,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 2\2.1.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 2/2.1.png',
         'correct': 'B',
         'type': 'type2',
         'keyboard': kb_type2,
-        'explanation': '''Если пойдёт дождь, мы останемся дома, а если будет солнечно, пойдём гулять.  
+        'explanation': '''Если пойдёт дождь, мы останемся дома, а если будет солнечно, пойдём гулять.
 Здесь две придаточные части равноправны и соединены союзом «а». Они обе отвечают на один и тот же вопрос главного предложения («Что произойдёт, если...»), имеют одинаковую грамматическую форму и структуру — значит, подчинение параллельное.
 '''
     },
     {
         'id' : 8,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 2\2.2.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 2/2.2.png',
         'correct': 'C',
         'type': 'type2',
         'keyboard': kb_type2,
-        'explanation': '''Я знаю, что он приедет, и что привезёт подарок.  
+        'explanation': '''Я знаю, что он приедет, и что привезёт подарок.
 Первое придаточное («что он приедет») относится к главному предложению, второе («что привезёт подарок») зависит от первого придаточного. Подчинительные отношения идут последовательно одно за другим.
 '''
     },
     {
         'id' : 9,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 2\2.3.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 2/2.3.png',
         'correct': 'B',
         'type': 'type2',
         'keyboard': kb_type2,
-        'explanation': '''Я думаю, что он сдаст экзамен, потому что хорошо подготовился.  
+        'explanation': '''Я думаю, что он сдаст экзамен, потому что хорошо подготовился.
 Придаточные части («что он сдаст экзамен», «потому что хорошо подготовился») зависят от одного и того же главного предложения и находятся в отношениях причины и следствия, оба отвечают на вопросы одного типа («Почему я так думаю?»). Это именно однородное подчинение.
 '''
     },
     {
         'id' : 10,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 2\2.4.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 2/2.4.png',
         'correct': 'A',
         'type': 'type2',
         'keyboard': kb_type2,
@@ -836,17 +855,17 @@ BD = [
     },
     {
         'id' : 11,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 2\2.5.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 2/2.5.png',
         'correct': 'C',
         'type': 'type2',
         'keyboard': kb_type2,
-        'explanation': '''Он сказал, что сдаст экзамен и что будет поступать в университет.  
+        'explanation': '''Он сказал, что сдаст экзамен и что будет поступать в университет.
 Здесь второе придаточное («что будет поступать в университет») связано с первым («что сдаст экзамен»), а само первое связано с главным («он сказал»). Получилась цепочка подчинения, то есть последовательное подчинение.
 '''
     },
     {
         'id' : 12,
-        'image': r'C:\Users\misap\Desktop\Punctle_bot (code)\Задания\Задания 2\2.6.png',
+        'image': r'/home/KrE3st/bot/Задания/Задания 2/2.6.png',
         'correct': 'B',
         'type': 'type2',
         'keyboard': kb_type2,
@@ -901,19 +920,28 @@ def validate_database():
 
 
 async def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
+    try:
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            filename='bot.log'  # Логирование в файл
+        )
 
-    # Запускаем задачу сброса ограничений
-    asyncio.create_task(reset_daily_limits())
+        # Регистрация роутера
+        dp.include_router(router)
 
-    # Запускаем уведомления для подписанных пользователей
-    for user_id in subscribed_users:
-        await schedule_next_notification(user_id)
+        # Запускаем задачу сброса ограничений
+        asyncio.create_task(reset_daily_limits())
 
-    await dp.start_polling(bot)
+        # Запускаем уведомления для подписанных пользователей
+        for user_id in subscribed_users:
+            await schedule_next_notification(user_id)
+
+        # Запуск бота
+        await dp.start_polling(bot, skip_updates=True)
+    except Exception as e:
+        logging.error(f"Critical error: {e}")
+        raise
 
 
 
